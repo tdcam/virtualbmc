@@ -7,11 +7,12 @@
       command: dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
     - name: Enable Codeready Builder
-      command: subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+      command: /bin/crb enable
 
     - name: Install required packages
       dnf:
         name:
+          - python3-pip
           - python3-argcomplete
           - python3-autopage
           - python3-cliff

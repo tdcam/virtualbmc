@@ -1,0 +1,22 @@
+---
+- name: Power on IPMI
+  hosts: localhost
+  become: yes
+  vars:
+    hypervisor_ip: "172.31.100.33"
+    vbmc_ports:
+      - 623
+      - 624
+      - 625
+  tasks:
+    - name: Power on IPMI VirtualBMC instances
+      command: ipmitool -I lanplus -H {{ hypervisor_ip }} -U admin -P password -p {{ item }} chassis power on
+      loop: "{{ vbmc_ports }}"
+      register: ipmi_status
+      ignore_errors: yes  # Prevent fatal failure if a VM isn't responding
+
+    - name: Display IPMI status
+      debug:
+        msg: "{{ item.stdout_lines | default('No output') }}"
+      loop: "{{ ipmi_status.results }}"
+

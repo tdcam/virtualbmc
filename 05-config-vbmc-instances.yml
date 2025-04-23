@@ -4,18 +4,18 @@
   become: yes
   vars:
     vbmc_nodes:
-      - name: control-plane-1
+      - name: ctrl-1.aus.redhat.com
         port: 623
-      - name: control-plane-2
+      - name: ctrl-2.aus.redhat.com
         port: 624
-      - name: control-plane-3
+      - name: ctrl-3.aus.redhat.com
         port: 625
   tasks:
     - name: Add VirtualBMC instances
-      command: vbmc add {{ item.name }} --port {{ item.port }}
+      command: /usr/local/bin/vbmc add {{ item.name }} --port {{ item.port }}
       loop: "{{ vbmc_nodes }}"
 
     - name: Start VirtualBMC instances
-      command: vbmc start {{ item.name }}
+      command: /usr/local/bin/vbmc start {{ item.name }}
       loop: "{{ vbmc_nodes }}"
 
