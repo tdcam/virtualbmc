@@ -17,7 +17,7 @@ YOU HAVE BEEN WARNED. THIS IS ONLY FOR DEMONSTRATION PURPOSES!
 DON'T USE IT IN PRODUCTION!
 
 The steps are to:
- - register the machine to Red Hat
+ - register the machine to Red Hat (assumed, no playbook for this)
  - install EPEL
  - install some EPEL packages
  - pip install virtualbmc
