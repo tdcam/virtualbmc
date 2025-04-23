@@ -1,0 +1,11 @@
+---
+- name: Install VirtualBMC
+  hosts: dixie-flatline.aus.redhat.com
+  become: yes
+  tasks:
+    - name: Install VirtualBMC using pip
+      pip:
+        name: virtualbmc
+        state: present
+        executable: pip3
+

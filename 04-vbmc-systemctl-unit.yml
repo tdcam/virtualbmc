@@ -1,0 +1,34 @@
+---
+- name: Create Systemd Unit File for vbmcd
+  hosts: dixie-flatline.aus.redhat.com
+  become: yes
+  tasks:
+    - name: Create vbmcd service file
+      copy:
+        dest: /etc/systemd/system/vbmcd.service
+        content: |
+          [Unit]
+          Description=Virtual BMC Daemon
+          After=network.target
+
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/bin/vbmcd --foreground
+          Restart=always
+          User=root
+          Group=root
+          StandardOutput=journal
+          StandardError=journal
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: Enable and start vbmcd
+      systemd:
+        name: vbmcd
+        enabled: yes
+        state: started
+

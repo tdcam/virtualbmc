@@ -1,0 +1,16 @@
+---
+- name: Modify VirtualBMC Bind Addresses
+  hosts: dixie-flatline.aus.redhat.com
+  become: yes
+  tasks:
+    - name: Update control.py bind address
+      replace:
+        path: /usr/local/lib/python3.9/site-packages/virtualbmc/control.py
+        regexp: 'socket.bind\("tcp://127.0.0.1:%s"\s%\sserver_port\)'
+        replace: 'socket.bind("tcp://0.0.0.0:%s" % server_port)'
+
+    - name: Update vbmc.py connect address
+      replace:
+        path: /usr/local/lib/python3.9/site-packages/virtualbmc/cmd/vbmc.py
+        regexp: 'socket.connect\("tcp://127.0.0.1:%s"\s%\sserver_port\)'
+        replace: 'socket.connect("tcp://0.0.0.0:%s" % server_port)'

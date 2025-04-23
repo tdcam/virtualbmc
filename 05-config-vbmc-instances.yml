@@ -1,0 +1,21 @@
+---
+- name: Configure VirtualBMC Instances
+  hosts: dixie-flatline.aus.redhat.com
+  become: yes
+  vars:
+    vbmc_nodes:
+      - name: control-plane-1
+        port: 623
+      - name: control-plane-2
+        port: 624
+      - name: control-plane-3
+        port: 625
+  tasks:
+    - name: Add VirtualBMC instances
+      command: vbmc add {{ item.name }} --port {{ item.port }}
+      loop: "{{ vbmc_nodes }}"
+
+    - name: Start VirtualBMC instances
+      command: vbmc start {{ item.name }}
+      loop: "{{ vbmc_nodes }}"
+

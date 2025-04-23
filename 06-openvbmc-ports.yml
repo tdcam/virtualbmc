@@ -1,0 +1,20 @@
+---
+- name: Open Firewall Ports for VirtualBMC
+  hosts: dixie-flatline.aus.redhat.com
+  become: yes
+  vars:
+    vbmc_ports:
+      - 623
+      - 624
+      - 625
+  tasks:
+    - name: Open firewall ports
+      firewalld:
+        port: "{{ item }}/udp"
+        permanent: yes
+        state: enabled
+      loop: "{{ vbmc_ports }}"
+
+    - name: Reload firewall rules
+      command: firewall-cmd --reload
+

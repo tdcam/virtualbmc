@@ -1,0 +1,27 @@
+---
+- name: Enable EPEL and Install Required Packages
+  hosts: dixie-flatline.aus.redhat.com
+  become: yes
+  tasks:
+    - name: Enable EPEL repository
+      command: dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+
+    - name: Enable Codeready Builder
+      command: subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+
+    - name: Install required packages
+      dnf:
+        name:
+          - python3-argcomplete
+          - python3-autopage
+          - python3-cliff
+          - python3-cmd2
+          - python3-importlib-metadata
+          - python3-pbr
+          - python3-prettytable
+          - python3-pyghmi
+          - python3-pyperclip
+          - python3-stevedore
+          - python3-wcwidth
+        state: present
+
