@@ -28,5 +28,6 @@ The steps are to:
  - open the apprioriate firewall ports
  - use ipmitool to check that the vbmc is working
 
-I've broken this down into small playbooks so it's easy to follow.
+I've broken this down into small playbooks so it's easy to follow. I also
+added playbooks to power on and power off the VMs using IPMI.
 
