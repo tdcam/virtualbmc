@@ -1,5 +1,5 @@
 ---
-- name: Install VirtualBMC
+- name: Install VirtualBMC and Open Required Ports
   hosts: dixie-flatline.aus.redhat.com
   become: yes
   tasks:
@@ -8,4 +8,13 @@
         name: virtualbmc
         state: present
         executable: pip3
+
+    - name: Open VirtualBMC daemon port (50891/tcp)
+      firewalld:
+        port: 50891/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Reload firewall rules
+      command: firewall-cmd --reload
 
